@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: demo shell
+      shell: echo 'This is a demo shell' > /tmp/playbook.log
