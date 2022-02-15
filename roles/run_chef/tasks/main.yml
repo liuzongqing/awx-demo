@@ -1,0 +1,24 @@
+---
+- name: create chef directory
+  ansible.builtin.file:
+    path: /etc/chef
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: copy chef client config file
+  ansible.builtin.copy:
+    src: client.rb
+    dest: /etc/chef/client.rb
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: run chef role with environment for centos6
+  shell: chef-client -e {{ chef_environment }} -o role {{ chef_role }}
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version <= '6'
+
+- name: run chef role with environment for centos7
+  shell: chef-client -e {{ chef_environment }} -r role {{ chef_role }}
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version >= '7'

@@ -1,0 +1,3 @@
+---
+chef_environment: koa-release
+chef_role: app 
